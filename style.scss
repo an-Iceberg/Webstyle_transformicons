@@ -1,0 +1,100 @@
+@mixin flex($direction: column, $content: center, $align: center, $gap: 30px, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $content;
+  align-items: $align;
+  gap: $gap;
+  flex-wrap: $wrap;
+}
+
+*, *:is(::after, ::before) {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font: 1rem "Veranda", sans-serif;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  @include flex();
+  background-color: #382f45;
+
+  .container {
+    @include flex();
+
+    p {
+      color: #fff;
+      font-size: 2rem;
+    }
+
+    label {
+      width: 100%;
+      cursor: pointer;
+      color: #fff;
+      font-size: 2rem;
+      @include flex($direction: row, $content: flex-start, $gap: 5px);
+
+      input {
+        appearance: none;
+        display: none;
+
+        &:checked {
+          & + .check {
+            rotate: -45deg;
+            translate: 0 -9px;
+
+            &::before, &::after {
+              background-color: #0f0;
+              box-shadow: 0 0 0 transparent;
+            }
+
+            &::after { height: 50%; }
+          }
+
+          & + .cross {
+            rotate: -45deg;
+
+            &::before, &::after {
+              background-color: #f00;
+              box-shadow: 0 0 0 transparent;
+            }
+
+            &::before { bottom: calc(50% - (3px / 2)); }
+
+            &::after { left: calc(50% - (3px / 2)); }
+          }
+        }
+      }
+
+      span {
+        position: relative;
+        margin: 0 10px;
+        width: 30px;
+        height: 30px;
+        transition: all .5s;
+
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background-color: #fff;
+          transition: all .5s;
+        }
+
+        &::before {
+          width: 100%;
+          height: 3px;
+          box-shadow: 0 -27px 0 #fff;
+        }
+
+        &::after {
+          width: 3px;
+          height: 100%;
+          box-shadow: 27px 0 0 #fff;
+        }
+      }
+    }
+  }
+}
